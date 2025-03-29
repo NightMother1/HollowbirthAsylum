@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Records</title>
+    <style>
+        body {
+            background: black;
+            color: red;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+        }
+        .records {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Patient Records</h1>
+    <p>Enter the password to access records:</p>
+    <input type="password" id="password">
+    <button onclick="checkPassword()">Submit</button>
+    <div class="records" id="records">
+        <p>Patient #001: Subject exhibits signs of irreversible transformation.</p>
+        <p>Patient #002: Whispering in an unknown tongue.</p>
+    </div>
+    <script>
+        function checkPassword() {
+            let pass = document.getElementById('password').value;
+            if (pass === "reborn") {
+                document.getElementById('records').style.display = 'block';
+            } else {
+                alert("Access Denied.");
+            }
+        }
+    </script>
+</body>
+</html>
