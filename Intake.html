@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Intake - Hollowbirth</title>
+    <style>
+        body {
+            background: black;
+            color: #b30000;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            overflow: hidden;
+        }
+        h1 {
+            font-size: 3em;
+            text-shadow: 0 0 20px red;
+            animation: flicker 2s infinite alternate;
+        }
+        @keyframes flicker {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        .container {
+            margin-top: 10vh;
+        }
+        form {
+            margin-top: 20px;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 1em;
+            background: black;
+            border: 1px solid red;
+            color: white;
+            text-align: center;
+            margin-top: 10px;
+            display: block;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        button {
+            background: red;
+            border: none;
+            cursor: pointer;
+        }
+        .message {
+            display: none;
+            margin-top: 20px;
+            color: white;
+        }
+        .hidden-message {
+            display: none;
+            color: #660000;
+            font-size: 0.9em;
+            margin-top: 10px;
+            animation: flicker 3s infinite alternate;
+        }
+        .whisper {
+            position: absolute;
+            font-size: 1.2em;
+            color: rgba(255, 255, 255, 0.1);
+            pointer-events: none;
+            animation: fadeWhisper 5s infinite alternate;
+        }
+        @keyframes fadeWhisper {
+            0% { opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Patient Intake</h1>
+        <p>Submit your name to begin the process. The transformation awaits.</p>
+        <form onsubmit="processIntake(event)">
+            <input type="text" id="name" placeholder="Enter your name" required>
+            <button type="submit">Submit</button>
+        </form>
+        <p class="message" id="message"></p>
+        <p class="hidden-message" id="hidden-message">You were chosen long before you arrived...</p>
+    </div>
+    
+    <audio id="whisper-audio" loop>
+        <source src="whispers.mp3" type="audio/mpeg">
+    </audio>
+    
+    <script>
+        function processIntake(event) {
+            event.preventDefault();
+            let name = document.getElementById('name').value;
+            document.getElementById('message').innerHTML =
+                `Thank you, ${name}... <br> You are now Ghuv'nox #${Math.floor(Math.random() * 999) + 1}. <br> The process has begun.`;
+            document.getElementById('message').style.display = 'block';
+            
+            setTimeout(() => {
+                document.getElementById('hidden-message').style.display = 'block';
+                playWhispers();
+                createWhispers();
+            }, 3000);
+        }
+        
+        function playWhispers() {
+            let audio = document.getElementById('whisper-audio');
+            audio.volume = 0.3;
+            audio.play();
+        }
+        
+        function createWhispers() {
+            for (let i = 0; i < 5; i++) {
+                let whisper = document.createElement('div');
+                whisper.classList.add('whisper');
+                whisper.innerText = [
+                    "Join us...",
+                    "It’s too late...",
+                    "We see you...",
+                    "You belong here...",
+                    "The flesh is ready..."
+                ][Math.floor(Math.random() * 5)];
+                
+                whisper.style.top = Math.random() * 100 + 'vh';
+                whisper.style.left = Math.random() * 100 + 'vw';
+                document.body.appendChild(whisper);
+                
+                setTimeout(() => {
+                    whisper.remove();
+                }, 7000);
+            }
+        }
+    </script>
+</body>
+</html>
